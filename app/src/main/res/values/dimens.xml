@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="one_dp">1dp</dimen>
+    <dimen name="margin_default">16dp</dimen>
+    <dimen name="margin_in_between">8dp</dimen>
+    <dimen name="margin_in_between_small">4dp</dimen>
+    <dimen name="margin_menu_button">64dp</dimen>
+    <dimen name="corner_size">8dp</dimen>
+
+    <dimen name="fab_margin">16dp</dimen>
+</resources>
