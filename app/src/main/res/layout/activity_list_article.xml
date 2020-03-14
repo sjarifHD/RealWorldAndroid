@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/margin_default"
-    tools:context=".ListPostActivity">
+    tools:context=".view.ListArticleActivity">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvPost"
@@ -14,7 +14,7 @@
         android:clipToPadding="false"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@layout/item_post" />
+        tools:listitem="@layout/item_article" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabAddPost"

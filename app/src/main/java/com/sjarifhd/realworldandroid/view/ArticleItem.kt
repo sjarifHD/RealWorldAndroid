@@ -1,23 +1,24 @@
-package com.sjarifhd.realworldandroid
+package com.sjarifhd.realworldandroid.view
 
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.items.AbstractItem
-import kotlinx.android.synthetic.main.item_post.view.*
+import com.sjarifhd.realworldandroid.R
+import kotlinx.android.synthetic.main.item_article.view.*
 import java.util.*
 
-open class PostItem(
+open class ArticleItem(
     val uuid: UUID,
     val title: String,
     val author: String,
     val createdAt: String,
     val isFavorite: Boolean
-) : AbstractItem<PostItem.ViewHolder>() {
+) : AbstractItem<ArticleItem.ViewHolder>() {
 
     override val layoutRes: Int
-        get() = R.layout.item_post
+        get() = R.layout.item_article
 
     override val type: Int
         get() = R.id.layout_item_post
@@ -30,13 +31,13 @@ open class PostItem(
         return "PostItem(uuid=$uuid, title='$title', author='$author', createdAt='$createdAt', isFavorite=$isFavorite)"
     }
 
-    class ViewHolder(view: View) : FastAdapter.ViewHolder<PostItem>(view) {
+    class ViewHolder(view: View) : FastAdapter.ViewHolder<ArticleItem>(view) {
         var titleView: TextView = view.tvTitle
         var authorView: TextView = view.tvAuthor
         var createdAtView: TextView = view.tvCreatedAt
         var isFavoriteView: ImageView = view.imgFavorite
 
-        override fun bindView(item: PostItem, payloads: MutableList<Any>) {
+        override fun bindView(item: ArticleItem, payloads: MutableList<Any>) {
             titleView.text = item.title
             authorView.text = item.author
             createdAtView.text = item.createdAt
@@ -50,7 +51,7 @@ open class PostItem(
             isFavoriteView.setImageResource(imgRes)
         }
 
-        override fun unbindView(item: PostItem) {
+        override fun unbindView(item: ArticleItem) {
             titleView.text = null
             authorView.text = null
             createdAtView.text = null

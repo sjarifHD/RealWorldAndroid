@@ -1,4 +1,4 @@
-package com.sjarifhd.realworldandroid
+package com.sjarifhd.realworldandroid.view
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,27 +9,28 @@ import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.adapters.ItemAdapter
 import com.mikepenz.fastadapter.adapters.ItemAdapter.Companion.items
 import com.mikepenz.fastadapter.diff.FastAdapterDiffUtil
-import kotlinx.android.synthetic.main.activity_list_post.*
+import com.sjarifhd.realworldandroid.R
+import kotlinx.android.synthetic.main.activity_list_article.*
 
-class ListPostActivity : AppCompatActivity() {
+class ListArticleActivity : AppCompatActivity() {
 
-    private lateinit var postItemAdapter: ItemAdapter<PostItem>
-    private lateinit var fastAdapter: FastAdapter<PostItem>
+    private lateinit var articleItemAdapter: ItemAdapter<ArticleItem>
+    private lateinit var fastAdapter: FastAdapter<ArticleItem>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_list_post)
+        setContentView(R.layout.activity_list_article)
 
         setPostAdapter()
         getPosts(dummyPosts)
         fabAddPost.setOnClickListener {
-            startActivity(Intent(this, AddPostActivity::class.java))
+            startActivity(Intent(this, AddArticleActivity::class.java))
         }
     }
 
     private fun setPostAdapter() {
-        postItemAdapter = items()
-        fastAdapter = FastAdapter.with(postItemAdapter)
+        articleItemAdapter = items()
+        fastAdapter = FastAdapter.with(articleItemAdapter)
 
         fastAdapter.onClickListener = { view, _, item, _ ->
             view?.let { onPostClicked(item) }
@@ -42,13 +43,13 @@ class ListPostActivity : AppCompatActivity() {
         rvPost.adapter = fastAdapter
     }
 
-    private fun getPosts(postItems: List<PostItem>) {
-        val diffCallback = DiffUtilPostItem()
-        val result = FastAdapterDiffUtil.calculateDiff(postItemAdapter, postItems, diffCallback)
-        FastAdapterDiffUtil[postItemAdapter] = result
+    private fun getPosts(articleItems: List<ArticleItem>) {
+        val diffCallback = DiffUtilArticleItem()
+        val result = FastAdapterDiffUtil.calculateDiff(articleItemAdapter, articleItems, diffCallback)
+        FastAdapterDiffUtil[articleItemAdapter] = result
     }
 
-    private fun onPostClicked(postItem: PostItem) {
-        startActivity(Intent(this, DetailPostActivity::class.java))
+    private fun onPostClicked(articleItem: ArticleItem) {
+        startActivity(Intent(this, DetailArticleActivity::class.java))
     }
 }
