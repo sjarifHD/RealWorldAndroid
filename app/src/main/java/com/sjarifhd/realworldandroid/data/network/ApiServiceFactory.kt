@@ -1,5 +1,6 @@
-package com.sjarifhd.realworldandroid.data
+package com.sjarifhd.realworldandroid.data.network
 
+import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.sjarifhd.realworldandroid.BuildConfig
 import okhttp3.OkHttpClient
@@ -7,7 +8,6 @@ import okhttp3.logging.HttpLoggingInterceptor
 import okhttp3.logging.HttpLoggingInterceptor.Level
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import java.util.concurrent.TimeUnit
 
 object ApiServiceFactory {
     private const val API_BASE_URL = "https://conduit.productionready.io/api/"
@@ -19,6 +19,7 @@ object ApiServiceFactory {
         .addInterceptor(HttpLoggingInterceptor().apply {
             level = if (BuildConfig.DEBUG) Level.HEADERS else Level.NONE
         })
+        .addNetworkInterceptor(StethoInterceptor())
         .build()
 
     private val retrofit: Retrofit = Retrofit.Builder()
@@ -29,5 +30,7 @@ object ApiServiceFactory {
         .build()
 
 
-    val articleApi: ArticleApi = retrofit.create(ArticleApi::class.java)
+    val articleApi: ArticleApi = retrofit.create(
+        ArticleApi::class.java
+    )
 }

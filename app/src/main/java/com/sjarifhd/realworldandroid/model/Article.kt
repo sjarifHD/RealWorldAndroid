@@ -1,7 +1,6 @@
-package com.sjarifhd.realworldandroid.data
+package com.sjarifhd.realworldandroid.model
 
 import com.squareup.moshi.JsonClass
-import retrofit2.http.GET
 
 @JsonClass(generateAdapter = true)
 data class Article(
@@ -24,11 +23,3 @@ data class Author(
     var image: String? = "",
     val following: Boolean
 )
-
-@JsonClass(generateAdapter = true)
-data class Articles(val articles: List<Article>, val articlesCount: Int)
-
-interface ArticleApi {
-    @GET("articles")
-    suspend fun getGlobal(): Articles
-}

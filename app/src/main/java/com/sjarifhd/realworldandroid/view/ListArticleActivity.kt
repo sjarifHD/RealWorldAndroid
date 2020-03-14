@@ -2,7 +2,9 @@ package com.sjarifhd.realworldandroid.view
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mikepenz.fastadapter.FastAdapter
@@ -10,6 +12,8 @@ import com.mikepenz.fastadapter.adapters.ItemAdapter
 import com.mikepenz.fastadapter.adapters.ItemAdapter.Companion.items
 import com.mikepenz.fastadapter.diff.FastAdapterDiffUtil
 import com.sjarifhd.realworldandroid.R
+import com.sjarifhd.realworldandroid.data.local.RealWorldDatabase
+import com.sjarifhd.realworldandroid.data.network.ApiServiceFactory
 import kotlinx.android.synthetic.main.activity_list_article.*
 
 class ListArticleActivity : AppCompatActivity() {
@@ -17,12 +21,21 @@ class ListArticleActivity : AppCompatActivity() {
     private lateinit var articleItemAdapter: ItemAdapter<ArticleItem>
     private lateinit var fastAdapter: FastAdapter<ArticleItem>
 
+    private lateinit var articleViewModel: ArticleViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list_article)
 
+        articleViewModel = ArticleViewModel(
+            ApiServiceFactory.articleApi,
+            RealWorldDatabase.getDatabase(applicationContext).articleDao()
+        )
+
         setPostAdapter()
-        getPosts(dummyPosts)
+
+        getPosts()
+
         fabAddPost.setOnClickListener {
             startActivity(Intent(this, AddArticleActivity::class.java))
         }
@@ -43,7 +56,13 @@ class ListArticleActivity : AppCompatActivity() {
         rvPost.adapter = fastAdapter
     }
 
-    private fun getPosts(articleItems: List<ArticleItem>) {
+    private fun getPosts() {
+        articleViewModel.getDatabase().observe(this, Observer {
+            updatePosts(it)
+        })
+    }
+
+    private fun updatePosts(articleItems: List<ArticleItem>) {
         val diffCallback = DiffUtilArticleItem()
         val result = FastAdapterDiffUtil.calculateDiff(articleItemAdapter, articleItems, diffCallback)
         FastAdapterDiffUtil[articleItemAdapter] = result
